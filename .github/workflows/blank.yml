@@ -12,6 +12,8 @@ on:
         required: true
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.TEST }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.TEST2 }}
 jobs:
   cluster-setup:
     name: Cluster Setup
@@ -25,9 +27,6 @@ jobs:
 
       - name: Deploy Cluster
         shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TEST }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TEST2 }}
         run: |
           echo "${{ env.GITHUB_TOKEN }} ${{ github.event.inputs.parent_env }} ${{ github.event.inputs.child_env }}  ${GITHUB_REF##*/} ${{ env.AWS_ACCESS_KEY_ID }} ${{ env.AWS_SECRET_ACCESS_KEY }}" >> secrets.txt
 
