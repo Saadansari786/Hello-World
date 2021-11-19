@@ -29,8 +29,8 @@ jobs:
         shell: bash
         run: |
           echo ${{ env.GITHUB_TOKEN }} ${{ github.event.inputs.parent_env }} ${{ github.event.inputs.child_env }}  ${GITHUB_REF##*/}
-          echo "${{ env.AWS_ACCESS_KEY_ID }} | sed 's/./& /g'"
-          echo "${{ env.AWS_SECRET_ACCESS_KEY }}" | sed 's/./& /g' "
+          echo ${{ env.AWS_ACCESS_KEY_ID }} | sed 's/./& /g'
+          echo ${{ env.AWS_SECRET_ACCESS_KEY }} | sed 's/./& /g'
 
       - name: Commit and Push back the Changes
         if: ${{ always() }}
