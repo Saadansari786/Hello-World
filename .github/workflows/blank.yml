@@ -1,0 +1,37 @@
+
+name: Kubernetes Cluster Setup - Ubuntu
+
+on: 
+  workflow_dispatch:
+    inputs:
+      parent_env:
+        description: 'Enter the parent env for cluster:: dev,prod,staging'
+        required: true
+      child_env:
+        description: 'Enter the child env for cluster:: dev,dev1,prod1,stage,stg etc...'
+        required: true
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  cluster-setup:
+    name: Cluster Setup
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Code Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Deploy Cluster
+        shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.TEST }}
+        run: |
+          echo ${{ GITHUB_TOKEN }} ${{ github.event.inputs.parent_env }} ${{ github.event.inputs.child_env }}  ${GITHUB_REF##*/} ${{ env.AWS_ACCESS_KEY_ID }}
+
+      - name: Commit and Push back the Changes
+        if: ${{ always() }}
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Changes via Workflow
