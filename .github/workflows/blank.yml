@@ -27,8 +27,9 @@ jobs:
         shell: bash
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.TEST }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TEST2 }}
         run: |
-          echo ${{ env.GITHUB_TOKEN }} ${{ github.event.inputs.parent_env }} ${{ github.event.inputs.child_env }}  ${GITHUB_REF##*/} ${{ env.AWS_ACCESS_KEY_ID }}
+          echo ${{ env.GITHUB_TOKEN }} ${{ github.event.inputs.parent_env }} ${{ github.event.inputs.child_env }}  ${GITHUB_REF##*/} ${{ env.AWS_ACCESS_KEY_ID }} ${{ env.AWS_SECRET_ACCESS_KEY }}
 
       - name: Commit and Push back the Changes
         if: ${{ always() }}
